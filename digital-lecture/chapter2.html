@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit II: Control Flow & Loops</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        traffic: {
+                            red: '#ef4444',
+                            yellow: '#eab308',
+                            green: '#22c55e',
+                            dark: '#1e293b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875em;
+        }
+        .section-heading {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #0ea5e9, #22c55e);
+            border-radius: 2px;
+        }
+        .syntax-box {
+            background: #f8fafc;
+            border-left: 4px solid #64748b;
+            padding: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            color: #334155;
+        }
+        .operator-row:nth-child(even) { background-color: #f8fafc; }
+        
+        /* Hide scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <!-- Mobile Menu Button -->
+    <button id="menu-btn" class="fixed top-4 right-4 z-50 p-3 bg-white rounded-full shadow-lg md:hidden text-brand-600">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="w-72 bg-white border-r border-slate-200 flex-shrink-0 h-full overflow-y-auto no-scrollbar hidden md:block transition-transform duration-300 fixed md:relative z-40 transform -translate-x-full md:translate-x-0 shadow-xl md:shadow-none">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-8">
+                    <i class="fab fa-python text-4xl text-brand-600"></i>
+                    <div>
+                        <h1 class="font-bold text-slate-900 leading-tight">Python Course</h1>
+                        <p class="text-xs text-slate-500 font-mono">UNIT II</p>
+                    </div>
+                </div>
+
+                <nav class="space-y-1">
+                    <a href="#intro" class="nav-link block px-4 py-3 text-sm font-medium rounded-lg bg-brand-50 text-brand-700 hover:bg-brand-50 transition-colors">
+                        2.0 Introduction
+                    </a>
+                    <a href="#conditionals" class="nav-link block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                        2.1 Conditionals
+                    </a>
+                    <a href="#loops" class="nav-link block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                        2.2 Iteration (Loops)
+                    </a>
+                    <a href="#control" class="nav-link block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                        2.3 Control Statements
+                    </a>
+                    <a href="#analogy" class="nav-link mt-4 block px-4 py-3 text-sm font-bold text-slate-700 bg-slate-100 border border-slate-200 rounded-lg hover:bg-slate-200 transition-colors">
+                        <i class="fas fa-car mr-2"></i> The Traffic Analogy
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="p-6 mt-auto border-t border-slate-100">
+                <div class="bg-slate-900 rounded-lg p-4 text-white">
+                    <p class="text-xs text-slate-400 mb-1">Created by</p>
+                    <p class="font-bold text-sm">Professional Instructor</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 h-full overflow-y-auto relative scroll-smooth p-6 md:p-12 lg:pr-64">
+            <div class="max-w-4xl mx-auto pb-20">
+                
+                <!-- Header -->
+                <header class="mb-12" id="intro">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="inline-block px-3 py-1 rounded-full bg-brand-100 text-brand-600 text-sm font-bold tracking-wide">UNIT II</span>
+                        <span class="inline-block px-3 py-1 rounded-full bg-green-100 text-green-600 text-sm font-bold tracking-wide">LOGIC</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">
+                        Control Flow & Loops
+                    </h1>
+                    <p class="text-xl text-slate-600 leading-relaxed">
+                        Control flow allows your program to make decisions and repeat actions. Without it, code simply executes from top to bottom like reading a book.
+                    </p>
+                </header>
+
+                <!-- 2.1 Conditionals -->
+                <section id="conditionals" class="mb-16 scroll-mt-10">
+                    <h2 class="text-2xl font-bold text-slate-800 section-heading">2.1 Conditionals</h2>
+                    
+                    <!-- Boolean Logic -->
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                            <h3 class="font-bold text-lg mb-3 flex items-center gap-2">
+                                <i class="fas fa-toggle-on text-brand-500"></i> Boolean Values
+                            </h3>
+                            <p class="text-slate-600 text-sm mb-4">
+                                Expressions evaluate to either <span class="code-block text-green-400 font-bold">True</span> or <span class="code-block text-red-400 font-bold">False</span>.
+                            </p>
+                            <div class="text-xs bg-slate-100 p-3 rounded text-slate-500">
+                                They belong to type <span class="code-block text-slate-700">bool</span>, they are NOT strings.
+                            </div>
+                        </div>
+
+                        <!-- Relational Operators -->
+                        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                            <table class="w-full text-sm text-left">
+                                <thead class="bg-slate-50 text-slate-700 font-bold uppercase text-xs">
+                                    <tr>
+                                        <th class="px-4 py-3">Operator</th>
+                                        <th class="px-4 py-3">Meaning</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="operator-row border-t border-slate-100">
+                                        <td class="px-4 py-2 font-mono text-brand-600">x == y</td>
+                                        <td class="px-4 py-2">Equal to</td>
+                                    </tr>
+                                    <tr class="operator-row border-t border-slate-100">
+                                        <td class="px-4 py-2 font-mono text-brand-600">x != y</td>
+                                        <td class="px-4 py-2">Not equal to</td>
+                                    </tr>
+                                    <tr class="operator-row border-t border-slate-100">
+                                        <td class="px-4 py-2 font-mono text-brand-600">x > y</td>
+                                        <td class="px-4 py-2">Greater than</td>
+                                    </tr>
+                                    <tr class="operator-row border-t border-slate-100">
+                                        <td class="px-4 py-2 font-mono text-brand-600">x <= y</td>
+                                        <td class="px-4 py-2">Less or equal</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- IF Statements Visuals -->
+                    <h3 class="font-bold text-lg text-slate-800 mb-4">Conditional Structures</h3>
+                    <div class="grid gap-4 md:grid-cols-3">
+                        <!-- IF -->
+                        <div class="p-4 border border-slate-200 rounded-lg hover:border-brand-300 transition-colors">
+                            <div class="text-center mb-3">
+                                <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded">IF</span>
+                            </div>
+                            <div class="syntax-box border-blue-400">
+                                if expression:<br>
+                                &nbsp;&nbsp;statement
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2">Executes only if True.</p>
+                        </div>
+                        <!-- IF ELSE -->
+                        <div class="p-4 border border-slate-200 rounded-lg hover:border-brand-300 transition-colors">
+                            <div class="text-center mb-3">
+                                <span class="bg-purple-100 text-purple-700 text-xs font-bold px-2 py-1 rounded">IF-ELSE</span>
+                            </div>
+                            <div class="syntax-box border-purple-400">
+                                if expr:<br>
+                                &nbsp;&nbsp;do_this<br>
+                                else:<br>
+                                &nbsp;&nbsp;do_that
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2">Alternative execution path.</p>
+                        </div>
+                        <!-- ELIF -->
+                        <div class="p-4 border border-slate-200 rounded-lg hover:border-brand-300 transition-colors">
+                            <div class="text-center mb-3">
+                                <span class="bg-orange-100 text-orange-700 text-xs font-bold px-2 py-1 rounded">CHAINED</span>
+                            </div>
+                            <div class="syntax-box border-orange-400">
+                                if expr1:<br>
+                                &nbsp;&nbsp;...<br>
+                                elif expr2:<br>
+                                &nbsp;&nbsp;...<br>
+                                else:<br>
+                                &nbsp;&nbsp;...
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2">Checks multiple conditions.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2.2 Loops -->
+                <section id="loops" class="mb-16 scroll-mt-10">
+                    <h2 class="text-2xl font-bold text-slate-800 section-heading">2.2 Iteration (Loops)</h2>
+                    
+                    <div class="flex flex-col md:flex-row gap-8 mb-8">
+                        <!-- While Loop -->
+                        <div class="flex-1 bg-white p-6 rounded-xl border-t-4 border-indigo-500 shadow-sm">
+                            <h3 class="text-xl font-bold text-indigo-900 mb-2">While Loop</h3>
+                            <p class="text-sm text-slate-600 mb-4">Repeats as long as condition is <span class="font-bold text-green-600">True</span>. Use when iterations are unknown.</p>
+                            <div class="bg-slate-900 text-slate-200 p-3 rounded font-mono text-sm">
+                                <span class="text-indigo-400">while</span> expression:<br>
+                                &nbsp;&nbsp;statement(s)
+                            </div>
+                        </div>
+
+                        <!-- For Loop -->
+                        <div class="flex-1 bg-white p-6 rounded-xl border-t-4 border-emerald-500 shadow-sm">
+                            <h3 class="text-xl font-bold text-emerald-900 mb-2">For Loop</h3>
+                            <p class="text-sm text-slate-600 mb-4">Iterates over a sequence (List, String, etc.). Use for fixed number of times.</p>
+                            <div class="bg-slate-900 text-slate-200 p-3 rounded font-mono text-sm">
+                                <span class="text-emerald-400">for</span> var <span class="text-emerald-400">in</span> sequence:<br>
+                                &nbsp;&nbsp;statement(s)
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Iterating Data Types -->
+                    <div class="bg-slate-100 rounded-lg p-6">
+                        <h4 class="font-bold text-slate-700 mb-4">What can you loop over?</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="bg-white p-3 rounded text-center shadow-sm">
+                                <i class="fas fa-list text-brand-500 mb-2"></i>
+                                <div class="font-bold text-sm">Lists</div>
+                            </div>
+                            <div class="bg-white p-3 rounded text-center shadow-sm">
+                                <i class="fas fa-quote-right text-brand-500 mb-2"></i>
+                                <div class="font-bold text-sm">Strings</div>
+                            </div>
+                            <div class="bg-white p-3 rounded text-center shadow-sm">
+                                <i class="fas fa-layer-group text-brand-500 mb-2"></i>
+                                <div class="font-bold text-sm">Tuples</div>
+                            </div>
+                            <div class="bg-white p-3 rounded text-center shadow-sm">
+                                <i class="fas fa-book text-brand-500 mb-2"></i>
+                                <div class="font-bold text-sm">Dictionaries</div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-4 text-center">
+                            * <strong>Nested Loops:</strong> A loop inside a loop (often used for multi-dimensional data).
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 2.3 Control Statements -->
+                <section id="control" class="mb-16 scroll-mt-10">
+                    <h2 class="text-2xl font-bold text-slate-800 section-heading">2.3 Loop Control Statements</h2>
+                    
+                    <div class="space-y-4">
+                        <!-- Break -->
+                        <div class="flex items-start gap-4 p-4 rounded-lg bg-red-50 border border-red-100">
+                            <div class="bg-red-500 text-white w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm">STOP</div>
+                            <div>
+                                <h3 class="font-bold text-red-900">break</h3>
+                                <p class="text-sm text-red-800">Terminates the loop immediately. Control exits the loop body entirely.</p>
+                            </div>
+                        </div>
+
+                        <!-- Continue -->
+                        <div class="flex items-start gap-4 p-4 rounded-lg bg-yellow-50 border border-yellow-100">
+                            <div class="bg-yellow-500 text-white w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-lg"><i class="fas fa-forward"></i></div>
+                            <div>
+                                <h3 class="font-bold text-yellow-900">continue</h3>
+                                <p class="text-sm text-yellow-800">Skips the <em>rest</em> of the current iteration. Jumps back to the start of the loop for the next round.</p>
+                            </div>
+                        </div>
+
+                        <!-- Pass -->
+                        <div class="flex items-start gap-4 p-4 rounded-lg bg-slate-100 border border-slate-200">
+                            <div class="bg-slate-400 text-white w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 font-bold"><i class="fas fa-ghost"></i></div>
+                            <div>
+                                <h3 class="font-bold text-slate-700">pass</h3>
+                                <p class="text-sm text-slate-600">A null statement. The interpreter executes it, but nothing happens. Used as a placeholder.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- THE TRAFFIC ANALOGY -->
+                <section id="analogy" class="mt-20 scroll-mt-10">
+                    <div class="relative bg-traffic-dark rounded-3xl p-8 md:p-12 shadow-2xl overflow-hidden text-white">
+                        <!-- Road Markings Background -->
+                        <div class="absolute inset-0 opacity-10" style="background-image: repeating-linear-gradient(90deg, transparent, transparent 49px, #fff 49px, #fff 51px, transparent 51px, transparent 100px);"></div>
+                        
+                        <div class="relative z-10">
+                            <h2 class="text-3xl font-extrabold mb-2 text-yellow-400">
+                                <i class="fas fa-traffic-light mr-2"></i> Logic on the Road
+                            </h2>
+                            <p class="text-slate-300 text-lg mb-8 font-medium">Think of Control Flow like Traffic Rules</p>
+
+                            <div class="grid gap-6 md:grid-cols-2">
+                                <!-- Card 1 -->
+                                <div class="bg-slate-800/80 backdrop-blur-sm p-6 rounded-2xl border border-slate-700">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <i class="fas fa-road text-3xl text-blue-400"></i>
+                                        <h4 class="font-bold text-xl">Conditionals</h4>
+                                    </div>
+                                    <p class="text-sm text-slate-300">
+                                        Like <strong>Detours</strong>. <br>
+                                        "IF the road is closed, take the detour; ELSE, drive straight."
+                                    </p>
+                                </div>
+
+                                <!-- Card 2 -->
+                                <div class="bg-slate-800/80 backdrop-blur-sm p-6 rounded-2xl border border-slate-700">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <i class="fas fa-sync text-3xl text-green-400"></i>
+                                        <h4 class="font-bold text-xl">Loops</h4>
+                                    </div>
+                                    <p class="text-sm text-slate-300">
+                                        Like <strong>Roundabouts</strong> or <strong>Race Tracks</strong>.<br>
+                                        "Drive around until you run out of gas (condition) or finish 5 laps (count)."
+                                    </p>
+                                </div>
+
+                                <!-- Card 3 -->
+                                <div class="bg-slate-800/80 backdrop-blur-sm p-6 rounded-2xl border border-slate-700">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <i class="fas fa-stop-circle text-3xl text-red-500"></i>
+                                        <h4 class="font-bold text-xl">Break</h4>
+                                    </div>
+                                    <p class="text-sm text-slate-300">
+                                        Like <strong>Parking</strong> the car.<br>
+                                        You stop driving entirely and exit the road.
+                                    </p>
+                                </div>
+
+                                <!-- Card 4 -->
+                                <div class="bg-slate-800/80 backdrop-blur-sm p-6 rounded-2xl border border-slate-700">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <i class="fas fa-share text-3xl text-yellow-400"></i>
+                                        <h4 class="font-bold text-xl">Continue</h4>
+                                    </div>
+                                    <p class="text-sm text-slate-300">
+                                        Like <strong>Swerving</strong> a pothole.<br>
+                                        You avoid the bump but keep driving immediately after.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Footer Navigation -->
+                <div class="mt-16 flex justify-between items-center border-t border-slate-200 pt-8">
+                    <button class="text-brand-600 font-bold flex items-center gap-2 hover:text-brand-800 transition-colors">
+                        <i class="fas fa-chevron-left"></i> Previous: Intro to Python
+                    </button>
+                    <button class="bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg font-bold shadow-lg shadow-brand-200 transition-all transform hover:-translate-y-1 flex items-center gap-2">
+                        Next Unit: Functions <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const sidebar = document.getElementById('sidebar');
+        let isMenuOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                sidebar.classList.remove('-translate-x-full', 'hidden');
+                sidebar.classList.add('translate-x-0', 'block', 'fixed', 'inset-y-0', 'left-0');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                sidebar.classList.remove('translate-x-0');
+                setTimeout(() => {
+                    if(!isMenuOpen) sidebar.classList.add('hidden');
+                }, 300);
+            }
+        });
+
+        // Highlight Active Section
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-link");
+
+        window.onscroll = () => {
+            let current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach((link) => {
+                link.classList.remove("bg-brand-50", "text-brand-700");
+                link.classList.add("text-slate-600"); 
+                if (link.getAttribute("href").includes(current)) {
+                    link.classList.add("bg-brand-50", "text-brand-700");
+                    link.classList.remove("text-slate-600");
+                }
+            });
+        };
+    </script>
+</body>
+</html>

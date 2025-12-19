@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit IV: Lists, Tuples, Dictionaries</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        lib: {
+                            indigo: '#4f46e5',
+                            amber: '#d97706',
+                            slate: '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875em;
+        }
+        .section-heading {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #4f46e5, #d97706);
+            border-radius: 2px;
+        }
+        .syntax-box {
+            background: #f8fafc;
+            border-left: 4px solid #64748b;
+            padding: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            color: #334155;
+        }
+        .method-row:nth-child(even) { background-color: #f8fafc; }
+        
+        /* List Visualizer */
+        .list-container {
+            display: flex;
+            gap: 4px;
+            background: #e0e7ff;
+            padding: 10px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        .list-item {
+            min-width: 40px;
+            height: 40px;
+            background: white;
+            border: 2px solid #4f46e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #4f46e5;
+            border-radius: 4px;
+            position: relative;
+        }
+        .list-index {
+            position: absolute;
+            bottom: -20px;
+            font-size: 10px;
+            color: #64748b;
+            font-family: monospace;
+        }
+        
+        /* Hide scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <!-- Mobile Menu Button -->
+    <button id="menu-btn" class="fixed top-4 right-4 z-50 p-3 bg-white rounded-full shadow-lg md:hidden text-brand-600">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="w-72 bg-white border-r border-slate-200 flex-shrink-0 h-full overflow-y-auto no-scrollbar hidden md:block transition-transform duration-300 fixed md:relative z-40 transform -translate-x-full md:translate-x-0 shadow-xl md:shadow-none">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-8">
+                    <i class="fab fa-python text-4xl text-brand-600"></i>
+                    <div>
+                        <h1 class="font-bold text-slate-900 leading-tight">Python Course</h1>
+                        <p class="text-xs text-slate-500 font-mono">UNIT IV</p>
+                    </div>
+                </div>
+
+                <nav class="space-y-1">
+                    <a href="#intro" class="nav-link block px-4 py-3 text-sm font-medium rounded-lg bg-brand-50 text-brand-700 hover:bg-brand-50 transition-colors">
+                        4.0 Introduction
+                    </a>
+                    <a href="#lists" class="nav-link block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                        4.1 Lists
+                    </a>
+                    <a href="#tuples" class="nav-link block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                        4.2 Tuples
+                    </a>
+                    <a href="#dictionaries" class="nav-link block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                        4.3 Dictionaries
+                    </a>
+                    <a href="#analogy" class="nav-link mt-4 block px-4 py-3 text-sm font-bold text-slate-700 bg-amber-50 border border-amber-200 rounded-lg hover:bg-amber-100 transition-colors">
+                        <i class="fas fa-book-reader mr-2"></i> The Library Analogy
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="p-6 mt-auto border-t border-slate-100">
+                <div class="bg-slate-900 rounded-lg p-4 text-white">
+                    <p class="text-xs text-slate-400 mb-1">Created by</p>
+                    <p class="font-bold text-sm">Professional Instructor</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 h-full overflow-y-auto relative scroll-smooth p-6 md:p-12 lg:pr-64">
+            <div class="max-w-4xl mx-auto pb-20">
+                
+                <!-- Header -->
+                <header class="mb-12" id="intro">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="inline-block px-3 py-1 rounded-full bg-brand-100 text-brand-600 text-sm font-bold tracking-wide">UNIT IV</span>
+                        <span class="inline-block px-3 py-1 rounded-full bg-indigo-100 text-indigo-600 text-sm font-bold tracking-wide">DATA STRUCTURES</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">
+                        Lists, Tuples, Dictionaries
+                    </h1>
+                    <p class="text-xl text-slate-600 leading-relaxed">
+                        These compound data structures allow you to group values together. Think of them as the containers that hold your program's data in organized ways.
+                    </p>
+                </header>
+
+                <!-- 4.1 Lists -->
+                <section id="lists" class="mb-16 scroll-mt-10">
+                    <h2 class="text-2xl font-bold text-slate-800 section-heading">4.1 Lists</h2>
+                    
+                    <div class="bg-indigo-50 border-l-4 border-indigo-500 p-6 rounded-r-lg mb-8">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-white p-2 rounded shadow-sm text-2xl">📋</div>
+                            <div>
+                                <h3 class="font-bold text-indigo-900 text-lg">The List</h3>
+                                <p class="text-indigo-800 text-sm mt-1">
+                                    Ordered, <strong>Changeable (Mutable)</strong>, Allows Duplicates.<br>
+                                    Defined with square brackets <span class="code-block text-white bg-indigo-900">[]</span>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visualizing Lists -->
+                    <div class="mb-8">
+                        <h4 class="font-bold text-sm text-slate-500 mb-3 uppercase tracking-wider">List Structure & Indexing</h4>
+                        <div class="list-container mb-6 pb-6">
+                            <div class="list-item">10<span class="list-index">0</span></div>
+                            <div class="list-item">20<span class="list-index">1</span></div>
+                            <div class="list-item">30<span class="list-index">2</span></div>
+                            <div class="list-item bg-amber-100 border-amber-400 text-amber-700">Hi<span class="list-index">3</span></div>
+                            <div class="list-item">50<span class="list-index">4</span></div>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="syntax-box">
+                                <span class="text-slate-500"># Slicing [start:stop:step]</span><br>
+                                list1[1:] <span class="text-slate-400"># From index 1 to end</span><br>
+                                list1[::-1] <span class="text-slate-400"># Reverse list</span>
+                            </div>
+                            <div class="syntax-box bg-white border-indigo-200">
+                                <span class="text-slate-500"># Comprehension</span><br>
+                                squares = [x**2 <span class="text-indigo-600">for</span> x <span class="text-indigo-600">in</span> range(5)]<br>
+                                <span class="text-slate-400"># Output: [0, 1, 4, 9, 16]</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mutability & Aliasing Warning -->
+                    <div class="bg-red-50 border border-red-100 rounded-xl p-6 mb-8">
+                        <h3 class="font-bold text-red-800 mb-2 flex items-center gap-2">
+                            <i class="fas fa-exclamation-triangle"></i> Mutability & Aliasing
+                        </h3>
+                        <p class="text-sm text-red-700 mb-4">
+                            Lists are mutable. If you say <span class="code-block bg-red-100 text-red-900">b = a</span>, both point to the same object!
+                        </p>
+                        <div class="flex flex-col md:flex-row gap-8 items-center justify-center bg-white p-4 rounded-lg border border-red-100">
+                            <div class="text-center">
+                                <div class="font-mono font-bold text-slate-700">a = [1, 2]</div>
+                                <div class="text-xs text-slate-400">Variable A</div>
+                            </div>
+                            <div class="text-2xl text-slate-300">➡</div>
+                            <div class="border-2 border-dashed border-red-300 bg-red-50 p-3 rounded text-center w-32">
+                                <span class="block text-xs font-bold text-red-400 mb-1">MEMORY</span>
+                                [1, 2]
+                            </div>
+                            <div class="text-2xl text-slate-300">⬅</div>
+                            <div class="text-center">
+                                <div class="font-mono font-bold text-slate-700">b = a</div>
+                                <div class="text-xs text-slate-400">Variable B</div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-center mt-3 text-red-600">To copy without linking, use cloning: <span class="font-mono font-bold">b = a[:]</span></p>
+                    </div>
+
+                    <!-- Methods Grid -->
+                    <h3 class="font-bold text-lg mb-3">Key Methods</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm font-mono text-center">
+                        <div class="p-2 bg-slate-100 rounded border border-slate-200">append()</div>
+                        <div class="p-2 bg-slate-100 rounded border border-slate-200">extend()</div>
+                        <div class="p-2 bg-slate-100 rounded border border-slate-200">pop(i)</div>
+                        <div class="p-2 bg-slate-100 rounded border border-slate-200">remove(v)</div>
+                        <div class="p-2 bg-slate-100 rounded border border-slate-200">sort()</div>
+                        <div class="p-2 bg-slate-100 rounded border border-slate-200">reverse()</div>
+                        <div class="p-2 bg-slate-100 rounded border border-slate-200">insert()</div>
+                        <div class="p-2 bg-red-100 text-red-700 rounded border border-red-200">del</div>
+                    </div>
+                </section>
+
+                <!-- 4.2 Tuples -->
+                <section id="tuples" class="mb-16 scroll-mt-10">
+                    <h2 class="text-2xl font-bold text-slate-800 section-heading">4.2 Tuples</h2>
+                    
+                    <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm mb-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <span class="text-3xl">📕</span>
+                            <div>
+                                <h3 class="font-bold text-lg">Immutable Sequence</h3>
+                                <p class="text-sm text-slate-600">Ordered, <strong>Unchangeable</strong>. Uses round brackets <span class="code-block">()</span>.</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-2 text-sm text-slate-700">
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Faster than lists.</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Can be used as dictionary keys.</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-magic text-purple-500"></i> <strong>Tuple Assignment:</strong> <span class="code-block">a, b = 1, 2</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r">
+                        <h4 class="font-bold text-amber-800 text-sm mb-1">Watch Out!</h4>
+                        <p class="text-xs text-amber-900 mb-2">
+                            <span class="code-block bg-white">(i for i in 'abc')</span> is NOT a tuple comprehension. It creates a <strong>Generator Object</strong>.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 4.3 Dictionaries -->
+                <section id="dictionaries" class="mb-16 scroll-mt-10">
+                    <h2 class="text-2xl font-bold text-slate-800 section-heading">4.3 Dictionaries</h2>
+                    <p class="mb-6 text-slate-600">Unordered collection of <strong>Key-Value</strong> pairs. Indexed by keys, not numbers. Uses curly brackets <span class="code-block">{}</span>.</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-8 mb-8">
+                        <!-- Dict Visualization -->
+                        <div class="bg-slate-800 rounded-xl p-6 text-white relative overflow-hidden">
+                            <div class="absolute top-0 right-0 p-4 opacity-10 text-6xl"><i class="fas fa-key"></i></div>
+                            <div class="font-mono text-sm mb-4 text-green-400">my_dict = {"brand": "mrcet", "year": 2004}</div>
+                            
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="bg-slate-700 px-2 py-1 rounded text-xs text-amber-400 w-16 text-center">KEY</span>
+                                    <i class="fas fa-arrow-right text-slate-500 text-xs"></i>
+                                    <span class="bg-slate-600 px-2 py-1 rounded text-xs w-24 text-center">VALUE</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="border border-slate-600 px-2 py-1 rounded text-xs w-16 text-center">"brand"</span>
+                                    <i class="fas fa-arrow-right text-slate-500 text-xs"></i>
+                                    <span class="text-indigo-300 font-bold">"mrcet"</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="border border-slate-600 px-2 py-1 rounded text-xs w-16 text-center">"year"</span>
+                                    <i class="fas fa-arrow-right text-slate-500 text-xs"></i>
+                                    <span class="text-indigo-300 font-bold">2004</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Methods -->
+                        <div>
+                            <h3 class="font-bold text-lg mb-3">Dictionary Methods</h3>
+                            <ul class="space-y-2 text-sm">
+                                <li class="bg-white p-2 rounded border border-slate-200 shadow-sm">
+                                    <span class="font-mono font-bold text-brand-600">keys() / values() / items()</span>
+                                    <div class="text-xs text-slate-500 mt-1">Returns views of keys, values, or pairs.</div>
+                                </li>
+                                <li class="bg-white p-2 rounded border border-slate-200 shadow-sm">
+                                    <span class="font-mono font-bold text-brand-600">get(key)</span>
+                                    <div class="text-xs text-slate-500 mt-1">Safe access. Returns None if key missing.</div>
+                                </li>
+                                <li class="bg-white p-2 rounded border border-slate-200 shadow-sm">
+                                    <span class="font-mono font-bold text-brand-600">pop(key)</span>
+                                    <div class="text-xs text-slate-500 mt-1">Removes item and returns value.</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- THE LIBRARY ANALOGY -->
+                <section id="analogy" class="mt-20 scroll-mt-10">
+                    <div class="relative bg-gradient-to-br from-indigo-900 to-slate-900 rounded-3xl p-8 md:p-12 shadow-2xl overflow-hidden text-white">
+                        <!-- Bg Effect -->
+                        <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+                        
+                        <div class="relative z-10">
+                            <h2 class="text-3xl font-extrabold mb-2 text-amber-400">
+                                <i class="fas fa-book-reader mr-2"></i> The Library Analogy
+                            </h2>
+                            <p class="text-slate-300 text-lg mb-10 font-medium">Understanding Data Structures through Physical Objects</p>
+
+                            <div class="grid gap-6 md:grid-cols-3">
+                                <!-- Lists -->
+                                <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/10 hover:bg-white/20 transition-colors group">
+                                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">📁</div>
+                                    <h4 class="font-bold text-xl mb-2 text-indigo-300">Lists = Physical Files</h4>
+                                    <p class="text-sm text-slate-300 leading-relaxed">
+                                        Like a binder. You can add new pages, remove old ones, or rearrange them easily.
+                                        <br><span class="text-amber-400 font-bold text-xs uppercase mt-2 block">Mutable</span>
+                                    </p>
+                                </div>
+
+                                <!-- Tuples -->
+                                <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/10 hover:bg-white/20 transition-colors group">
+                                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">📕</div>
+                                    <h4 class="font-bold text-xl mb-2 text-red-300">Tuples = Printed Books</h4>
+                                    <p class="text-sm text-slate-300 leading-relaxed">
+                                        The content is ordered and readable, but once printed, you cannot change the words inside.
+                                        <br><span class="text-amber-400 font-bold text-xs uppercase mt-2 block">Immutable</span>
+                                    </p>
+                                </div>
+
+                                <!-- Dictionaries -->
+                                <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/10 hover:bg-white/20 transition-colors group">
+                                    <div class="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">📒</div>
+                                    <h4 class="font-bold text-xl mb-2 text-green-300">Dicts = Phonebooks</h4>
+                                    <p class="text-sm text-slate-300 leading-relaxed">
+                                        You don't look for a number by counting lines (Index). You look it up by Name (Key) to find the Number (Value).
+                                        <br><span class="text-amber-400 font-bold text-xs uppercase mt-2 block">Key-Value Pair</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Footer Navigation -->
+                <div class="mt-16 flex justify-between items-center border-t border-slate-200 pt-8">
+                    <button class="text-brand-600 font-bold flex items-center gap-2 hover:text-brand-800 transition-colors">
+                        <i class="fas fa-chevron-left"></i> Previous: Functions
+                    </button>
+                    <button class="bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg font-bold shadow-lg shadow-brand-200 transition-all transform hover:-translate-y-1 flex items-center gap-2">
+                        Next Unit: Files & Exceptions <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const sidebar = document.getElementById('sidebar');
+        let isMenuOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                sidebar.classList.remove('-translate-x-full', 'hidden');
+                sidebar.classList.add('translate-x-0', 'block', 'fixed', 'inset-y-0', 'left-0');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                sidebar.classList.remove('translate-x-0');
+                setTimeout(() => {
+                    if(!isMenuOpen) sidebar.classList.add('hidden');
+                }, 300);
+            }
+        });
+
+        // Highlight Active Section
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-link");
+
+        window.onscroll = () => {
+            let current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach((link) => {
+                link.classList.remove("bg-brand-50", "text-brand-700");
+                link.classList.add("text-slate-600");
+                
+                // Special style for Analogy link
+                if (link.getAttribute("href") === "#analogy") {
+                     if (current === "analogy") {
+                        link.classList.remove("bg-amber-50", "text-slate-700");
+                        link.classList.add("bg-indigo-900", "text-white");
+                     } else {
+                        link.classList.remove("bg-indigo-900", "text-white");
+                        link.classList.add("bg-amber-50", "text-slate-700");
+                     }
+                } else {
+                    if (link.getAttribute("href").includes(current)) {
+                        link.classList.add("bg-brand-50", "text-brand-700");
+                        link.classList.remove("text-slate-600");
+                    }
+                }
+            });
+        };
+    </script>
+</body>
+</html>

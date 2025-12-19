@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit I: Introduction to Python</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        python: {
+                            blue: '#306998',
+                            yellow: '#FFD43B'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875em;
+        }
+        .section-heading {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #306998, #FFD43B);
+            border-radius: 2px;
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <!-- Mobile Menu Button -->
+    <button id="menu-btn" class="fixed top-4 right-4 z-50 p-3 bg-white rounded-full shadow-lg md:hidden text-brand-600">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="w-72 bg-white border-r border-slate-200 flex-shrink-0 h-full overflow-y-auto no-scrollbar hidden md:block transition-transform duration-300 fixed md:relative z-40 transform -translate-x-full md:translate-x-0 shadow-xl md:shadow-none">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-8">
+                    <i class="fab fa-python text-4xl text-python-blue"></i>
+                    <div>
+                        <h1 class="font-bold text-slate-900 leading-tight">Python Course</h1>
+                        <p class="text-xs text-slate-500 font-mono">UNIT I</p>
+                    </div>
+                </div>
+
+                <nav class="space-y-1">
+                    <a href="#intro" class="nav-link block px-4 py-3 text-sm font-medium rounded-lg bg-brand-50 text-brand-700 hover:bg-brand-50 transition-colors">
+                        1.1 Introduction & Installation
+                    </a>
+                    <a href="#datatypes" class="nav-link block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                        1.2 Data Types
+                    </a>
+                    <a href="#variables" class="nav-link block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                        1.3 Variables & Expressions
+                    </a>
+                    <a href="#operators" class="nav-link block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                        1.4 Operators & Comments
+                    </a>
+                    <a href="#modules" class="nav-link block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                        1.5 Modules & Functions
+                    </a>
+                    <a href="#analogy" class="nav-link mt-4 block px-4 py-3 text-sm font-bold text-amber-700 bg-amber-50 border border-amber-200 rounded-lg hover:bg-amber-100 transition-colors">
+                        <i class="fas fa-lightbulb mr-2"></i> The Kitchen Analogy
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="p-6 mt-auto border-t border-slate-100">
+                <div class="bg-slate-900 rounded-lg p-4 text-white">
+                    <p class="text-xs text-slate-400 mb-1">Created by</p>
+                    <p class="font-bold text-sm">Professional Instructor</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 h-full overflow-y-auto relative scroll-smooth p-6 md:p-12 lg:pr-64">
+            <div class="max-w-4xl mx-auto pb-20">
+                
+                <!-- Header -->
+                <header class="mb-12">
+                    <span class="inline-block px-3 py-1 rounded-full bg-brand-100 text-brand-600 text-sm font-bold tracking-wide mb-4">UNIT I</span>
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">
+                        Introduction – Data, Expressions, Statements
+                    </h1>
+                    <p class="text-xl text-slate-600 leading-relaxed">
+                        Python is a general-purpose, high-level programming language originally designed by Guido van Rossum in 1991. It emphasizes code readability and concepts in fewer lines of code.
+                    </p>
+                </header>
+
+                <!-- 1.1 Introduction -->
+                <section id="intro" class="mb-16 scroll-mt-10">
+                    <h2 class="text-2xl font-bold text-slate-800 section-heading">1.1 Introduction to Python</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-4">
+                                <i class="fas fa-history"></i>
+                            </div>
+                            <h3 class="font-bold text-lg mb-2">History & Versions</h3>
+                            <p class="text-slate-600 text-sm">
+                                <strong>Python 2 (2000)</strong> vs <strong>Python 3 (2008)</strong>. Python 3 includes new features and better testing.
+                            </p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-green-600 mb-4">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <h3 class="font-bold text-lg mb-2">How it Works</h3>
+                            <p class="text-slate-600 text-sm">
+                                Code is translated into byte code (<span class="code-block">.pyc</span>) and executed by the <strong>PVM</strong> (Python Virtual Machine).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-100 rounded-2xl p-6">
+                        <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                            <i class="fas fa-terminal"></i> Modes of Operation
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="bg-white p-4 rounded-lg border-l-4 border-python-blue">
+                                <h4 class="font-bold text-python-blue">Interactive Mode</h4>
+                                <p class="text-sm text-slate-600 mt-1">Execute code directly at the prompt <span class="code-block">>>></span>. Best for testing small snippets. Memory quantities not shown unless requested.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg border-l-4 border-python-yellow">
+                                <h4 class="font-bold text-yellow-600">Script Mode</h4>
+                                <p class="text-sm text-slate-600 mt-1">Source code stored in a file <span class="code-block">.py</span>. Executed via <span class="code-block">python MyFile.py</span>. Essential for longer programs.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 1.2 Data Types -->
+                <section id="datatypes" class="mb-16 scroll-mt-10">
+                    <h2 class="text-2xl font-bold text-slate-800 section-heading">1.2 Data Types</h2>
+                    <p class="mb-6 text-slate-600">Standard types define operations and storage methods.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- INT -->
+                        <div class="bg-white p-5 rounded-xl border border-slate-200">
+                            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Number</div>
+                            <h3 class="text-xl font-mono font-bold text-indigo-600 mb-2">Int</h3>
+                            <p class="text-sm text-slate-600 mb-3">Whole numbers without decimals.</p>
+                            <div class="text-xs bg-slate-100 p-2 rounded font-mono">20, -5, 0b10</div>
+                        </div>
+                        <!-- FLOAT -->
+                        <div class="bg-white p-5 rounded-xl border border-slate-200">
+                            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Number</div>
+                            <h3 class="text-xl font-mono font-bold text-indigo-600 mb-2">Float</h3>
+                            <p class="text-sm text-slate-600 mb-3">Decimals or scientific notation.</p>
+                            <div class="text-xs bg-slate-100 p-2 rounded font-mono">2.8, -87.7e100</div>
+                        </div>
+                        <!-- BOOLEAN -->
+                        <div class="bg-white p-5 rounded-xl border border-slate-200">
+                            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Logic</div>
+                            <h3 class="text-xl font-mono font-bold text-indigo-600 mb-2">Boolean</h3>
+                            <p class="text-sm text-slate-600 mb-3">Represents truth values.</p>
+                            <div class="text-xs bg-slate-100 p-2 rounded font-mono">True, False</div>
+                        </div>
+                        <!-- STRING -->
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 md:col-span-2">
+                            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Text</div>
+                            <h3 class="text-xl font-mono font-bold text-indigo-600 mb-2">String</h3>
+                            <p class="text-sm text-slate-600 mb-3">
+                                Immutable set of characters in <span class="code-block">'</span> or <span class="code-block">"</span>.
+                                Escape with <span class="code-block">\</span> (e.g., <span class="code-block">\n</span> for new line).
+                            </p>
+                            <div class="text-xs bg-slate-100 p-2 rounded font-mono">"Hello", 'World'</div>
+                        </div>
+                        <!-- LIST -->
+                        <div class="bg-white p-5 rounded-xl border border-slate-200">
+                            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Collection</div>
+                            <h3 class="text-xl font-mono font-bold text-indigo-600 mb-2">List</h3>
+                            <p class="text-sm text-slate-600 mb-3">Ordered, changeable, allows duplicates.</p>
+                            <div class="text-xs bg-slate-100 p-2 rounded font-mono">[1, "a", 3.5]</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 1.3 Variables -->
+                <section id="variables" class="mb-16 scroll-mt-10">
+                    <h2 class="text-2xl font-bold text-slate-800 section-heading">1.3 Variables, Expressions & Statements</h2>
+                    
+                    <div class="mb-8">
+                        <h3 class="text-lg font-bold mb-3">Variable Rules</h3>
+                        <ul class="list-none space-y-2">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                <span class="text-slate-700">Start with a letter or underscore.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-times-circle text-red-500 mt-1"></i>
+                                <span class="text-slate-700">Cannot start with a number.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-exclamation-circle text-amber-500 mt-1"></i>
+                                <span class="text-slate-700">Case-sensitive & alphanumeric only.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-900 text-slate-300 rounded-lg p-6 font-mono text-sm overflow-x-auto">
+                        <div class="text-slate-500 mb-2"># Assignment Examples</div>
+                        <div class="mb-2">
+                            <span class="text-purple-400">x</span> = <span class="text-orange-400">10</span> <span class="text-slate-500"># Standard</span>
+                        </div>
+                        <div class="mb-2">
+                            <span class="text-purple-400">a</span> = <span class="text-purple-400">b</span> = <span class="text-purple-400">c</span> = <span class="text-orange-400">1</span> <span class="text-slate-500"># Multiple Assign (Single Value)</span>
+                        </div>
+                        <div class="mb-4">
+                            <span class="text-purple-400">a</span>, <span class="text-purple-400">b</span> = <span class="text-orange-400">1</span>, <span class="text-orange-400">2</span> <span class="text-slate-500"># Multiple Object Assign</span>
+                        </div>
+
+                        <div class="text-slate-500 mb-2 mt-4"># Conditional Expression</div>
+                        <div>
+                            <span class="text-purple-400">x</span> = <span class="text-green-400">"1"</span> <span class="text-red-400">if</span> True <span class="text-red-400">else</span> <span class="text-green-400">"2"</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 1.4 Operators -->
+                <section id="operators" class="mb-16 scroll-mt-10">
+                    <h2 class="text-2xl font-bold text-slate-800 section-heading">1.4 Operators & Comments</h2>
+                    
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="flex-1">
+                            <h3 class="font-bold text-lg mb-3">Precedence</h3>
+                            <p class="text-slate-600 mb-4">Determines evaluation order. <span class="code-block">*</span> is higher than <span class="code-block">+</span>.</p>
+                            <div class="bg-amber-50 border-l-4 border-amber-400 p-4">
+                                <p class="text-sm text-amber-900"><strong>Tip:</strong> Use parentheses <span class="code-block">()</span> to override precedence.</p>
+                                <p class="font-mono text-xs mt-2 bg-white/50 p-2 rounded">(10 + 10) * 2 = 40</p>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-lg mb-3">Comments</h3>
+                            <div class="space-y-3">
+                                <div class="p-3 border rounded-lg bg-white">
+                                    <span class="badge bg-slate-100 text-slate-600 px-2 py-1 text-xs rounded font-bold uppercase">Single-line</span>
+                                    <p class="font-mono text-sm text-green-600 mt-1"># This is a comment</p>
+                                </div>
+                                <div class="p-3 border rounded-lg bg-white">
+                                    <span class="badge bg-slate-100 text-slate-600 px-2 py-1 text-xs rounded font-bold uppercase">Multi-line</span>
+                                    <p class="font-mono text-sm text-green-600 mt-1">"""<br>Multi-line<br>comment<br>"""</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 1.5 Modules -->
+                <section id="modules" class="mb-16 scroll-mt-10">
+                    <h2 class="text-2xl font-bold text-slate-800 section-heading">1.5 Modules & Functions</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-8 mb-8">
+                        <div>
+                            <h3 class="font-bold text-lg text-brand-600 mb-2">Modules</h3>
+                            <p class="text-slate-600 text-sm mb-2">Files containing definitions (.py). Used via <span class="code-block">import</span>.</p>
+                            <p class="text-xs text-slate-500">e.g., <span class="code-block">import sys</span></p>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-brand-600 mb-2">Functions</h3>
+                            <p class="text-slate-600 text-sm mb-2">Reusable code blocks performing specific tasks.</p>
+                            <p class="text-xs text-slate-500">Built-in: <span class="code-block">print()</span> | User-defined: <span class="code-block">def name():</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Argument Types Table -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-slate-600 border border-slate-200 rounded-lg">
+                            <thead class="text-xs text-slate-700 uppercase bg-slate-50">
+                                <tr>
+                                    <th class="px-6 py-3 border-b">Argument Type</th>
+                                    <th class="px-6 py-3 border-b">Description</th>
+                                    <th class="px-6 py-3 border-b">Syntax Example</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-white border-b hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-bold text-slate-900">Default</td>
+                                    <td class="px-6 py-4">Value assigned in definition.</td>
+                                    <td class="px-6 py-4 font-mono text-xs">def func(a=4)</td>
+                                </tr>
+                                <tr class="bg-white border-b hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-bold text-slate-900">Keyword</td>
+                                    <td class="px-6 py-4">Passed by name, order doesn't matter.</td>
+                                    <td class="px-6 py-4 font-mono text-xs">func(c=50, a=100)</td>
+                                </tr>
+                                <tr class="bg-white hover:bg-slate-50">
+                                    <td class="px-6 py-4 font-bold text-slate-900">Variable-length</td>
+                                    <td class="px-6 py-4">Unknown number of arguments.</td>
+                                    <td class="px-6 py-4 font-mono text-xs">*args (tuple), **kwargs (dict)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- THE ANALOGY -->
+                <section id="analogy" class="mt-20 scroll-mt-10">
+                    <div class="relative bg-gradient-to-br from-amber-50 to-orange-50 rounded-3xl p-8 md:p-12 border border-amber-100 shadow-xl overflow-hidden">
+                        <!-- Decorative bg icon -->
+                        <i class="fas fa-utensils absolute -top-6 -right-6 text-9xl text-amber-100 opacity-50 transform rotate-12"></i>
+                        
+                        <div class="relative z-10">
+                            <h2 class="text-3xl font-extrabold text-amber-900 mb-2">
+                                <i class="fas fa-lightbulb text-yellow-500 mr-2"></i> Understanding Python
+                            </h2>
+                            <p class="text-amber-800 text-lg mb-8 font-medium">The Restaurant Kitchen Analogy</p>
+
+                            <div class="grid gap-6 md:grid-cols-3">
+                                <!-- Card 1 -->
+                                <div class="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-sm border-b-4 border-blue-400">
+                                    <div class="text-4xl mb-4">🥣</div>
+                                    <h4 class="font-bold text-slate-800 text-lg">Variables</h4>
+                                    <p class="text-sm text-slate-600 mt-2">
+                                        The <strong>Containers</strong> (bowls, pans). They hold the ingredients while you work.
+                                    </p>
+                                </div>
+
+                                <!-- Card 2 -->
+                                <div class="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-sm border-b-4 border-green-400">
+                                    <div class="text-4xl mb-4">🥦🥩</div>
+                                    <h4 class="font-bold text-slate-800 text-lg">Data Types</h4>
+                                    <p class="text-sm text-slate-600 mt-2">
+                                        The <strong>Ingredients</strong>.<br>
+                                        Integers = Solid Veggies.<br>
+                                        Floats = Liquids/Sauces.
+                                    </p>
+                                </div>
+
+                                <!-- Card 3 -->
+                                <div class="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-sm border-b-4 border-red-400">
+                                    <div class="text-4xl mb-4">🌪️🔥</div>
+                                    <h4 class="font-bold text-slate-800 text-lg">Functions</h4>
+                                    <p class="text-sm text-slate-600 mt-2">
+                                        The <strong>Appliances</strong> (Blender, Oven). Input ingredients (Args) -> Process -> Output Result.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 bg-white/60 p-4 rounded-xl flex items-start gap-3">
+                                <i class="fas fa-warehouse text-amber-700 mt-1"></i>
+                                <p class="text-sm text-amber-900">
+                                    <strong>Modules</strong> are the <strong>Pantries</strong> or Spice Racks—organized sections where specific tools are stored so the counter isn't messy.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Footer Navigation -->
+                <div class="mt-16 flex justify-between items-center border-t border-slate-200 pt-8">
+                    <button class="text-slate-400 cursor-not-allowed flex items-center gap-2">
+                        <i class="fas fa-chevron-left"></i> Previous Unit
+                    </button>
+                    <button class="bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg font-bold shadow-lg shadow-brand-200 transition-all transform hover:-translate-y-1 flex items-center gap-2">
+                        Next Unit: Control Flow <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const sidebar = document.getElementById('sidebar');
+        let isMenuOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                sidebar.classList.remove('-translate-x-full', 'hidden');
+                sidebar.classList.add('translate-x-0', 'block', 'fixed', 'inset-y-0', 'left-0');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                sidebar.classList.remove('translate-x-0');
+                // Timeout to wait for transition before hiding
+                setTimeout(() => {
+                    if(!isMenuOpen) sidebar.classList.add('hidden');
+                }, 300);
+            }
+        });
+
+        // Highlight Active Section on Scroll (ScrollSpy)
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-link");
+
+        window.onscroll = () => {
+            let current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach((link) => {
+                link.classList.remove("bg-brand-50", "text-brand-700");
+                link.classList.add("text-slate-600"); 
+                if (link.getAttribute("href").includes(current)) {
+                    link.classList.add("bg-brand-50", "text-brand-700");
+                    link.classList.remove("text-slate-600");
+                }
+            });
+        };
+    </script>
+</body>
+</html>

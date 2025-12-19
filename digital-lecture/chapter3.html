@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit III: Functions & Arrays</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        doll: {
+                            light: '#fef2f2',
+                            red: '#dc2626',
+                            dark: '#7f1d1d',
+                            accent: '#fca5a5'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875em;
+        }
+        .section-heading {
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #0ea5e9, #dc2626);
+            border-radius: 2px;
+        }
+        .syntax-box {
+            background: #f8fafc;
+            border-left: 4px solid #64748b;
+            padding: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            color: #334155;
+        }
+        .method-row:nth-child(even) { background-color: #f8fafc; }
+        
+        /* String Index Visualizer */
+        .index-box {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 2px;
+        }
+        .char-box {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: bold;
+        }
+        .idx-num {
+            font-size: 0.7em;
+            color: #64748b;
+            margin-top: 4px;
+        }
+        
+        /* Hide scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <!-- Mobile Menu Button -->
+    <button id="menu-btn" class="fixed top-4 right-4 z-50 p-3 bg-white rounded-full shadow-lg md:hidden text-brand-600">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="w-72 bg-white border-r border-slate-200 flex-shrink-0 h-full overflow-y-auto no-scrollbar hidden md:block transition-transform duration-300 fixed md:relative z-40 transform -translate-x-full md:translate-x-0 shadow-xl md:shadow-none">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-8">
+                    <i class="fab fa-python text-4xl text-brand-600"></i>
+                    <div>
+                        <h1 class="font-bold text-slate-900 leading-tight">Python Course</h1>
+                        <p class="text-xs text-slate-500 font-mono">UNIT III</p>
+                    </div>
+                </div>
+
+                <nav class="space-y-1">
+                    <a href="#intro" class="nav-link block px-4 py-3 text-sm font-medium rounded-lg bg-brand-50 text-brand-700 hover:bg-brand-50 transition-colors">
+                        3.0 Introduction
+                    </a>
+                    <a href="#fruitful" class="nav-link block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                        3.1 Fruitful Functions
+                    </a>
+                    <a href="#strings" class="nav-link block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                        3.2 Strings
+                    </a>
+                    <a href="#arrays" class="nav-link block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                        3.3 Python Arrays
+                    </a>
+                    <a href="#analogy" class="nav-link mt-4 block px-4 py-3 text-sm font-bold text-doll-dark bg-doll-light border border-doll-accent rounded-lg hover:bg-red-100 transition-colors">
+                        <i class="fas fa-cubes mr-2"></i> The Nesting Doll Analogy
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="p-6 mt-auto border-t border-slate-100">
+                <div class="bg-slate-900 rounded-lg p-4 text-white">
+                    <p class="text-xs text-slate-400 mb-1">Created by</p>
+                    <p class="font-bold text-sm">Professional Instructor</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 h-full overflow-y-auto relative scroll-smooth p-6 md:p-12 lg:pr-64">
+            <div class="max-w-4xl mx-auto pb-20">
+                
+                <!-- Header -->
+                <header class="mb-12" id="intro">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="inline-block px-3 py-1 rounded-full bg-brand-100 text-brand-600 text-sm font-bold tracking-wide">UNIT III</span>
+                        <span class="inline-block px-3 py-1 rounded-full bg-red-100 text-red-600 text-sm font-bold tracking-wide">STRUCTURE</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">
+                        Functions & Arrays
+                    </h1>
+                    <p class="text-xl text-slate-600 leading-relaxed">
+                        Moving beyond basic logic to organizing code into reusable blocks (Functions) and managing complex data sequences (Strings and Arrays).
+                    </p>
+                </header>
+
+                <!-- 3.1 Fruitful Functions -->
+                <section id="fruitful" class="mb-16 scroll-mt-10">
+                    <h2 class="text-2xl font-bold text-slate-800 section-heading">3.1 Fruitful Functions</h2>
+                    
+                    <!-- Return vs Void -->
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-white p-6 rounded-xl border-l-4 border-brand-500 shadow-sm">
+                            <h3 class="font-bold text-lg mb-2 text-brand-700">Fruitful Function</h3>
+                            <p class="text-sm text-slate-600 mb-2">Returns a value using <span class="code-block">return</span>.</p>
+                            <div class="bg-slate-100 p-2 rounded text-xs font-mono">def add(a,b): return a+b</div>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl border-l-4 border-slate-400 shadow-sm">
+                            <h3 class="font-bold text-lg mb-2 text-slate-700">Void Function</h3>
+                            <p class="text-sm text-slate-600 mb-2">Performs action, returns <span class="code-block">None</span>.</p>
+                            <div class="bg-slate-100 p-2 rounded text-xs font-mono">def greet(): print("Hi")</div>
+                        </div>
+                    </div>
+
+                    <!-- Scope Visualization -->
+                    <div class="bg-slate-100 rounded-xl p-6 mb-8 relative overflow-hidden">
+                        <h3 class="font-bold text-slate-800 mb-4 z-10 relative">Scope: Local vs Global</h3>
+                        <div class="border-2 border-dashed border-slate-300 p-4 rounded-lg bg-white relative z-10">
+                            <span class="absolute top-2 right-2 text-xs font-bold text-slate-400">GLOBAL SCOPE (File Level)</span>
+                            <p class="mb-4 text-sm font-mono text-slate-600">x = 10 <span class="text-slate-400"># Visible everywhere</span></p>
+                            
+                            <div class="border-2 border-blue-200 bg-blue-50 p-4 rounded-lg w-3/4">
+                                <span class="text-xs font-bold text-blue-400 block mb-2">LOCAL SCOPE (Function)</span>
+                                <p class="text-sm font-mono text-blue-800">
+                                    def func():<br>
+                                    &nbsp;&nbsp;y = 5 <span class="text-blue-400"># Only visible here</span><br>
+                                    &nbsp;&nbsp;global x <span class="text-blue-400"># Modify global</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                         <h3 class="font-bold text-lg mb-3">Function Composition</h3>
+                         <p class="text-sm text-slate-600 mb-2">Using output of one function as input for another.</p>
+                         <div class="syntax-box">result = FunctionB(FunctionA(x))</div>
+                    </div>
+                </section>
+
+                <!-- 3.2 Strings -->
+                <section id="strings" class="mb-16 scroll-mt-10">
+                    <h2 class="text-2xl font-bold text-slate-800 section-heading">3.2 Strings</h2>
+                    
+                    <div class="mb-8">
+                        <p class="text-slate-600 mb-4">A string is a sequence of characters. It is <strong>Immutable</strong> (cannot be changed).</p>
+                        
+                        <!-- String Slicing Visualizer -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 overflow-x-auto">
+                            <h4 class="font-bold text-sm text-slate-500 mb-4 uppercase tracking-wider">Indexing & Slicing Visualizer</h4>
+                            <div class="flex mb-2">
+                                <div class="index-box"><div class="char-box">P</div><div class="idx-num">0</div></div>
+                                <div class="index-box"><div class="char-box">y</div><div class="idx-num">1</div></div>
+                                <div class="index-box"><div class="char-box">t</div><div class="idx-num">2</div></div>
+                                <div class="index-box"><div class="char-box">h</div><div class="idx-num">3</div></div>
+                                <div class="index-box"><div class="char-box">o</div><div class="idx-num">4</div></div>
+                                <div class="index-box"><div class="char-box">n</div><div class="idx-num">5</div></div>
+                            </div>
+                            <div class="flex text-xs text-red-500 font-mono mb-4">
+                                <div style="width: 32px; text-align: center">-6</div>
+                                <div style="width: 32px; text-align: center">-5</div>
+                                <div style="width: 32px; text-align: center">-4</div>
+                                <div style="width: 32px; text-align: center">-3</div>
+                                <div style="width: 32px; text-align: center">-2</div>
+                                <div style="width: 32px; text-align: center">-1</div>
+                            </div>
+                            <div class="bg-slate-100 p-3 rounded font-mono text-sm text-slate-700">
+                                s = "Python"<br>
+                                s[0] -> 'P'<br>
+                                s[1:4] -> 'yth' (Start at 1, stop before 4)
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- String Methods Table -->
+                    <h3 class="font-bold text-lg mb-3">Key Methods</h3>
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mb-6">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-slate-50 text-slate-700 font-bold uppercase text-xs">
+                                <tr>
+                                    <th class="px-4 py-3">Method</th>
+                                    <th class="px-4 py-3">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="method-row border-t border-slate-100">
+                                    <td class="px-4 py-2 font-mono text-brand-600">isalnum()</td>
+                                    <td class="px-4 py-2">True if alphanumeric.</td>
+                                </tr>
+                                <tr class="method-row border-t border-slate-100">
+                                    <td class="px-4 py-2 font-mono text-brand-600">find(sub)</td>
+                                    <td class="px-4 py-2">Returns index of substring.</td>
+                                </tr>
+                                <tr class="method-row border-t border-slate-100">
+                                    <td class="px-4 py-2 font-mono text-brand-600">split(delim)</td>
+                                    <td class="px-4 py-2">Splits string into a list.</td>
+                                </tr>
+                                <tr class="method-row border-t border-slate-100">
+                                    <td class="px-4 py-2 font-mono text-brand-600">replace(o, n)</td>
+                                    <td class="px-4 py-2">Replaces old with new.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- 3.3 Arrays -->
+                <section id="arrays" class="mb-16 scroll-mt-10">
+                    <h2 class="text-2xl font-bold text-slate-800 section-heading">3.3 Python Arrays</h2>
+                    <p class="text-slate-600 mb-4">Container for fixed number of items of the <strong>SAME TYPE</strong>. Must import <span class="code-block">array</span> module.</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-white p-5 rounded-lg border border-slate-200">
+                            <h3 class="font-bold text-sm uppercase text-slate-500 mb-2">Syntax</h3>
+                            <div class="font-mono text-sm bg-slate-900 text-green-400 p-3 rounded">
+                                from array import *<br>
+                                a = array('i', [1, 2, 3])
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-lg border border-slate-200">
+                            <h3 class="font-bold text-sm uppercase text-slate-500 mb-2">Common Typecodes</h3>
+                            <ul class="text-sm space-y-2">
+                                <li class="flex justify-between border-b pb-1">
+                                    <span class="font-mono font-bold text-brand-600">'i'</span>
+                                    <span>Signed Integer (2 bytes)</span>
+                                </li>
+                                <li class="flex justify-between border-b pb-1">
+                                    <span class="font-mono font-bold text-brand-600">'f'</span>
+                                    <span>Floating point (4 bytes)</span>
+                                </li>
+                                <li class="flex justify-between">
+                                    <span class="font-mono font-bold text-brand-600">'d'</span>
+                                    <span>Double float (8 bytes)</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Array Methods -->
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-slate-100 border border-slate-200 rounded text-xs font-mono">append()</span>
+                        <span class="px-3 py-1 bg-slate-100 border border-slate-200 rounded text-xs font-mono">pop()</span>
+                        <span class="px-3 py-1 bg-slate-100 border border-slate-200 rounded text-xs font-mono">remove()</span>
+                        <span class="px-3 py-1 bg-slate-100 border border-slate-200 rounded text-xs font-mono">insert()</span>
+                        <span class="px-3 py-1 bg-slate-100 border border-slate-200 rounded text-xs font-mono">reverse()</span>
+                    </div>
+                </section>
+
+                <!-- THE NESTING DOLL ANALOGY -->
+                <section id="analogy" class="mt-20 scroll-mt-10">
+                    <div class="relative bg-gradient-to-br from-doll-red to-doll-dark rounded-3xl p-8 md:p-12 shadow-2xl overflow-hidden text-white">
+                        <!-- Decorative Opacity Icons -->
+                        <i class="fas fa-child absolute -bottom-4 right-10 text-9xl text-white opacity-10 transform -rotate-12"></i>
+                        <i class="fas fa-child absolute top-10 right-40 text-6xl text-white opacity-5 transform rotate-12"></i>
+                        
+                        <div class="relative z-10">
+                            <h2 class="text-3xl font-extrabold mb-2 text-doll-accent">
+                                <i class="fas fa-recycle mr-2"></i> Recursion
+                            </h2>
+                            <p class="text-red-100 text-lg mb-8 font-medium">The Russian Nesting Doll Analogy</p>
+
+                            <div class="flex flex-col md:flex-row items-center justify-center gap-4 mb-8">
+                                <!-- Doll 1 (Big) -->
+                                <div class="w-32 h-40 bg-white text-doll-red rounded-t-full rounded-b-3xl flex flex-col items-center justify-center shadow-lg transform hover:scale-105 transition-transform">
+                                    <span class="text-xs font-bold uppercase mt-2">Function Call</span>
+                                    <i class="fas fa-child text-5xl my-2"></i>
+                                    <span class="text-xs text-center px-2">fact(5)</span>
+                                </div>
+                                <i class="fas fa-arrow-right text-doll-accent text-xl"></i>
+                                
+                                <!-- Doll 2 (Medium) -->
+                                <div class="w-24 h-32 bg-red-100 text-doll-red rounded-t-full rounded-b-3xl flex flex-col items-center justify-center shadow-lg">
+                                    <i class="fas fa-child text-4xl my-1"></i>
+                                    <span class="text-[10px] text-center px-1">fact(4)</span>
+                                </div>
+                                <i class="fas fa-arrow-right text-doll-accent text-xl"></i>
+
+                                <!-- Doll 3 (Small - Base Case) -->
+                                <div class="w-16 h-20 bg-doll-accent text-doll-dark rounded-t-full rounded-b-3xl flex flex-col items-center justify-center shadow-lg border-2 border-white">
+                                    <i class="fas fa-child text-2xl"></i>
+                                    <span class="text-[8px] font-bold mt-1">BASE CASE</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20">
+                                <p class="text-sm text-red-50 leading-relaxed">
+                                    <strong class="text-white">Recursion</strong> is like opening a set of dolls.
+                                    <br><br>
+                                    1. You open the biggest doll (the function call) to find a smaller one inside.<br>
+                                    2. You keep opening them until you reach the tiniest, solid doll (the <strong>Base Case</strong>).<br>
+                                    3. Once you reach the center, you put them all back together (returning values up the chain).
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Footer Navigation -->
+                <div class="mt-16 flex justify-between items-center border-t border-slate-200 pt-8">
+                    <button class="text-brand-600 font-bold flex items-center gap-2 hover:text-brand-800 transition-colors">
+                        <i class="fas fa-chevron-left"></i> Previous: Control Flow
+                    </button>
+                    <button class="bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg font-bold shadow-lg shadow-brand-200 transition-all transform hover:-translate-y-1 flex items-center gap-2">
+                        Next Unit: File Handling <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const sidebar = document.getElementById('sidebar');
+        let isMenuOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                sidebar.classList.remove('-translate-x-full', 'hidden');
+                sidebar.classList.add('translate-x-0', 'block', 'fixed', 'inset-y-0', 'left-0');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                sidebar.classList.remove('translate-x-0');
+                setTimeout(() => {
+                    if(!isMenuOpen) sidebar.classList.add('hidden');
+                }, 300);
+            }
+        });
+
+        // Highlight Active Section
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-link");
+
+        window.onscroll = () => {
+            let current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach((link) => {
+                link.classList.remove("bg-brand-50", "text-brand-700");
+                link.classList.add("text-slate-600");
+                
+                // Special style for Analogy link
+                if (link.getAttribute("href") === "#analogy") {
+                     if (current === "analogy") {
+                        link.classList.remove("bg-doll-light", "text-doll-dark");
+                        link.classList.add("bg-red-200", "text-red-900");
+                     } else {
+                        link.classList.remove("bg-red-200", "text-red-900");
+                        link.classList.add("bg-doll-light", "text-doll-dark");
+                     }
+                } else {
+                    if (link.getAttribute("href").includes(current)) {
+                        link.classList.add("bg-brand-50", "text-brand-700");
+                        link.classList.remove("text-slate-600");
+                    }
+                }
+            });
+        };
+    </script>
+</body>
+</html>
