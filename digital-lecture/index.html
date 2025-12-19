@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Programming Course</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-r from-slate-900 to-slate-800 text-white pb-32 pt-20 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <div class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-sm font-medium text-blue-200 mb-6 border border-white/10">
+                    <i class="fab fa-python"></i> Full Course Syllabus
+                </div>
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6">
+                    Master Python <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Step by Step</span>
+                </h1>
+                <p class="text-lg text-slate-300 leading-relaxed mb-8 max-w-lg">
+                    A comprehensive journey from basic syntax to advanced modular programming. Organized, visual, and interactive.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="chapter1.html" class="bg-brand-500 hover:bg-brand-600 text-white px-8 py-3 rounded-lg font-bold transition-all shadow-lg shadow-brand-500/30">
+                        Start Learning <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                    <a href="#curriculum" class="bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded-lg font-bold transition-all backdrop-blur-sm">
+                        View Curriculum
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center relative">
+                <div class="absolute inset-0 bg-brand-500 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python Logo" class="w-64 h-64 md:w-80 md:h-80 relative z-10 drop-shadow-2xl transform hover:-translate-y-2 transition-transform duration-500">
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content - Curriculum Grid -->
+    <main id="curriculum" class="max-w-6xl mx-auto px-6 -mt-20 pb-20 relative z-10">
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- Unit 1 -->
+            <a href="chapter1.html" class="group bg-white rounded-2xl p-6 shadow-xl shadow-slate-200/50 border border-slate-100 hover:border-brand-300 hover:shadow-2xl hover:shadow-brand-100/50 transition-all duration-300 flex flex-col h-full">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">UNIT I</span>
+                    <i class="fas fa-utensils text-slate-300 group-hover:text-amber-500 transition-colors text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-brand-600 transition-colors">Introduction</h3>
+                <p class="text-slate-500 text-sm mb-4 flex-grow">
+                    Data types, variables, and basic syntax. Learn the "Kitchen Analogy" to understand how Python works.
+                </p>
+                <div class="pt-4 border-t border-slate-100 flex items-center text-brand-600 text-sm font-bold">
+                    Start Unit <i class="fas fa-chevron-right ml-auto transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+            <!-- Unit 2 -->
+            <a href="chapter2.html" class="group bg-white rounded-2xl p-6 shadow-xl shadow-slate-200/50 border border-slate-100 hover:border-green-300 hover:shadow-2xl hover:shadow-green-100/50 transition-all duration-300 flex flex-col h-full">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">UNIT II</span>
+                    <i class="fas fa-traffic-light text-slate-300 group-hover:text-green-500 transition-colors text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-brand-600 transition-colors">Control Flow</h3>
+                <p class="text-slate-500 text-sm mb-4 flex-grow">
+                    Conditionals and loops. Master logic with the "Traffic Analogy" to control execution flow.
+                </p>
+                <div class="pt-4 border-t border-slate-100 flex items-center text-brand-600 text-sm font-bold">
+                    Start Unit <i class="fas fa-chevron-right ml-auto transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+            <!-- Unit 3 -->
+            <a href="chapter3.html" class="group bg-white rounded-2xl p-6 shadow-xl shadow-slate-200/50 border border-slate-100 hover:border-red-300 hover:shadow-2xl hover:shadow-red-100/50 transition-all duration-300 flex flex-col h-full">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full">UNIT III</span>
+                    <i class="fas fa-cubes text-slate-300 group-hover:text-red-500 transition-colors text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-brand-600 transition-colors">Functions & Arrays</h3>
+                <p class="text-slate-500 text-sm mb-4 flex-grow">
+                    Fruitful functions, strings, and recursion. Explore the "Nesting Doll Analogy".
+                </p>
+                <div class="pt-4 border-t border-slate-100 flex items-center text-brand-600 text-sm font-bold">
+                    Start Unit <i class="fas fa-chevron-right ml-auto transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+            <!-- Unit 4 -->
+            <a href="chapter4.html" class="group bg-white rounded-2xl p-6 shadow-xl shadow-slate-200/50 border border-slate-100 hover:border-indigo-300 hover:shadow-2xl hover:shadow-indigo-100/50 transition-all duration-300 flex flex-col h-full">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="bg-indigo-100 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full">UNIT IV</span>
+                    <i class="fas fa-book-reader text-slate-300 group-hover:text-indigo-500 transition-colors text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-brand-600 transition-colors">Data Structures</h3>
+                <p class="text-slate-500 text-sm mb-4 flex-grow">
+                    Lists, Tuples, Dictionaries. Organize data like a pro with the "Library Analogy".
+                </p>
+                <div class="pt-4 border-t border-slate-100 flex items-center text-brand-600 text-sm font-bold">
+                    Start Unit <i class="fas fa-chevron-right ml-auto transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+            <!-- Unit 5 -->
+            <a href="chapter5.html" class="group bg-white rounded-2xl p-6 shadow-xl shadow-slate-200/50 border border-slate-100 hover:border-teal-300 hover:shadow-2xl hover:shadow-teal-100/50 transition-all duration-300 flex flex-col h-full">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="bg-teal-100 text-teal-700 text-xs font-bold px-3 py-1 rounded-full">UNIT V</span>
+                    <i class="fas fa-archive text-slate-300 group-hover:text-teal-500 transition-colors text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-brand-600 transition-colors">Files & Modules</h3>
+                <p class="text-slate-500 text-sm mb-4 flex-grow">
+                    File handling, exceptions, and packages. Build robust systems with the "Organization Analogy".
+                </p>
+                <div class="pt-4 border-t border-slate-100 flex items-center text-brand-600 text-sm font-bold">
+                    Start Unit <i class="fas fa-chevron-right ml-auto transform group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
+
+            <!-- Coming Soon -->
+            <div class="group bg-slate-50 rounded-2xl p-6 border-2 border-dashed border-slate-200 flex flex-col h-full items-center justify-center text-center opacity-75">
+                <div class="w-12 h-12 bg-slate-200 rounded-full flex items-center justify-center text-slate-400 mb-4">
+                    <i class="fas fa-plus"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-400">More Coming Soon</h3>
+                <p class="text-slate-400 text-sm mt-2">Final Projects & Advanced Topics</p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 py-12">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <p class="text-slate-500 text-sm mb-4">Designed for Effective Learning</p>
+            <div class="flex justify-center gap-6 text-slate-400 mb-8">
+                <i class="fab fa-html5 hover:text-orange-500 transition-colors"></i>
+                <i class="fab fa-css3-alt hover:text-blue-500 transition-colors"></i>
+                <i class="fab fa-js hover:text-yellow-500 transition-colors"></i>
+            </div>
+            <p class="text-slate-400 text-xs">&copy; 2023 Python Course Material. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
